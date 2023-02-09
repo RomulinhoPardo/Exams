@@ -1,32 +1,34 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require ('cors')
-const RoutesShoes = require("./routes/RoutesShoes");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const userRoute = require("./routes/user");
+const CustomerRoute = require("./routes/CustomerRoute");
+const ProductRoute = require("./routes/ProductsRoutes");
+const InvoiceRoute = require("./routes/InvoicesRoutes");
+require("dotenv").config();
 
-const { application } = require('express');
-
-require ('dotenv').config();
-
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 const app = express();
-const PORT = process.env.PORT || 3013
+const PORT = process.env.PORT || 3064;
 
-app.use (cors())
+app.use(cors());
 
 //midlewares
 app.use(express.json());
-app.use("/api", RoutesShoes);
-
+app.use("/api", userRoute);
+app.use("/api", CustomerRoute);
+app.use("/api", ProductRoute);
+app.use("/api", InvoiceRoute);
 
 //routes
 app.get("/", (req, res) => {
-    res.send('Welcome to  my API Romulo Pardo');
-    res.json({ok:true})
+  res.send("Welcome to  my API TEAM4");
+  res.json({ ok: true });
 });
 
- mongoose.connect(process.env.URI_MONGODB)
-.then(()=> console.log('Connect to MONGODB Romulo Pardo is Successfully 👋'))
-.catch((error) => console.log('Connection fail MongoDB Atlas'));
+mongoose
+  .connect(process.env.URI_MONGODB)
+  .then(() => console.log("Connect to MONGODB TECHSTORE is Successfully 👋"))
+  .catch((error) => console.log("Connection fail MongoDB Atlas"));
 
-
-app.listen(PORT, () => console.log('Server started on port', PORT ));
+app.listen(PORT, () => console.log("Server started on port", PORT));
